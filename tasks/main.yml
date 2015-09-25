@@ -1,0 +1,68 @@
+---
+- name: create certs directory
+  sudo: yes
+  file:
+    path={{ kube_cert_dir }}
+    state=directory
+    mode=o-rwx
+
+- name: retrieve ca.pem
+  slurp:
+    src: "{{kubernetes_ca_depot}}/ca.pem"
+  register: ca_pem
+  run_once: true
+  delegate_to: "{{ groups['ca'][0] }}"
+
+- name: register ca.pem
+  set_fact:
+    kube_ca_pem: "{{ ca_pem.content|b64decode }}"
+
+- name: place ca.pem
+  sudo: yes
+  copy: content="{{ kube_ca_pem }}" dest="{{ kube_cert_dir }}/ca.pem"
+
+- name: retrieve worker.pem
+  slurp:
+    src: "{{kubernetes_ca_depot}}/worker.pem"
+  register: worker_pem
+  run_once: true
+  delegate_to: "{{ groups['ca'][0] }}"
+
+- name: register worker.pem
+  set_fact:
+    kube_worker_pem: "{{ worker_pem.content|b64decode }}"
+
+- name: place worker.pem
+  sudo: yes
+  copy: content="{{ kube_worker_pem }}" dest="{{ kube_cert_dir }}/worker.pem"
+
+- name: retrieve worker-key.pem
+  slurp:
+    src: "{{kubernetes_ca_depot}}/worker-key.pem"
+  register: worker_key_pem
+  run_once: true
+  delegate_to: "{{ groups['ca'][0] }}"
+
+- name: register worker-key.pem
+  set_fact:
+    kube_worker_key_pem: "{{ worker_key_pem.content|b64decode }}"
+
+- name: place worker-key.pem
+  sudo: yes
+  copy: content="{{ kube_worker_key_pem }}" dest="{{ kube_cert_dir }}/worker-key.pem"
+
+- name: create manifests directory
+  sudo: yes
+  file:
+    path={{ kube_manifests_dir }}
+    state=directory
+
+- name: install kubeconfig
+  sudo: yes
+  template: src=worker-kubeconfig.yaml dest={{kube_config_dir}}/worker-kubeconfig.yaml
+  notify: restart kubelet
+
+- name: install proxy pod
+  sudo: yes
+  template: src=kube-proxy.yaml dest={{kube_manifests_dir}}/kube-proxy.yaml
+  notify: restart kubelet
