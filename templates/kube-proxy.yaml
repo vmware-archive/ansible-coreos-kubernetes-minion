@@ -13,6 +13,7 @@ spec:
     - proxy
     - --master=https://{{hostvars[groups['kubernetes-masters'][0]].ansible_default_ipv4.address}}
     - --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml
+    - --proxy-mode=iptables
     securityContext:
       privileged: true
     volumeMounts:
