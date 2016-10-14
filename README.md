@@ -1,7 +1,7 @@
 CoreOS Kubernetes Minions
 =========================
 
-current version: 0.0.1
+current version: 0.1.0
 A role to manage Kubernetes minions in a CoreOS cluster
 
 Role Variables
