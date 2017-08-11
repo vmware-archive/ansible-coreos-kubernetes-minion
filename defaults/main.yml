@@ -5,3 +5,4 @@ kube_manifests_dir: "/etc/kubernetes/manifests"
 kubernetes_service_addresses: "172.21.0.0/16"
 kubernetes_version: "1.4.1"
 hyperkube: "gcr.io/google_containers/hyperkube:v{{kubernetes_version}}"
+kube_apiserver_secure_port: 6443
