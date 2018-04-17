@@ -6,3 +6,8 @@ kubernetes_service_addresses: "172.21.0.0/16"
 kubernetes_version: "1.4.1"
 hyperkube: "gcr.io/google_containers/hyperkube:v{{kubernetes_version}}"
 kube_apiserver_secure_port: 6443
+
+kube_proxy_requests_cpu: "200m"
+kube_proxy_requests_memory: "128Mi"
+kube_proxy_limits_cpu: "200m" # requests and limits should be same to get Guaranteed QoS
+kube_proxy_limits_memory: "128Mi"
