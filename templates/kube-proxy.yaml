@@ -12,6 +12,7 @@ spec:
     command:
     - /hyperkube
     - proxy
+    - -v={{kube_proxy_worker_log_level}}
     - --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml
     - --proxy-mode=iptables
     resources:
