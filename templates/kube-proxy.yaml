@@ -16,7 +16,7 @@ spec:
     image: "{{hyperkube}}"
     command:
     - /hyperkube
-    - proxy
+    - kube-proxy
     - -v={{kube_proxy_worker_log_level}}
     - --metrics-bind-address=0.0.0.0
     - --metrics-port=10249
