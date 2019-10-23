@@ -10,6 +10,12 @@
 - name: restart daemons
   command: /bin/true
   notify:
+    - reset failed kubelet
+
+- name: reset failed kubelet
+  become: true
+  command: systemctl reset-failed kubelet
+  notify:
     - restart kubelet
 
 - name: restart kubelet
