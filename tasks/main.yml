@@ -62,9 +62,11 @@
 - name: install kubeconfig
   become: yes
   template: src=worker-kubeconfig.yaml dest={{kube_config_dir}}/worker-kubeconfig.yaml
-  notify: restart kubelet
+  notify:
+    - reset failed kubelet
 
 - name: install proxy pod
   become: yes
   template: src=kube-proxy.yaml dest={{kube_manifests_dir}}/kube-proxy.yaml
-  notify: restart kubelet
+  notify:
+    - reset failed kubelet
