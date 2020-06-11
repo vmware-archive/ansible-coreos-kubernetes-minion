@@ -3,19 +3,18 @@
 set -u
 
 init() {
-	assertBinaryInstalled mount.cifs cifs-utils
-	assertBinaryInstalled jq jq
-	assertBinaryInstalled mountpoint util-linux
-	assertBinaryInstalled base64 coreutils
+	assertBinaryInstalled mount.cifs
+	assertBinaryInstalled jq
+	assertBinaryInstalled mountpoint
+	assertBinaryInstalled base64
 	echo '{ "status": "Success", "message": "The fstab/cifs flexvolume plugin was initialized successfully", "capabilities": { "attach": false } }'
 	exit 0
 }
 
 assertBinaryInstalled() {
 	binary="$1"
-	package="$2"
 	if ! which "$binary" > /dev/null ; then
-		errorExit "Failed to initialize the fstab/cifs flexvolume plugin. $binary command not found. Please install the $package package."
+		errorExit "Failed to initialize the fstab/cifs flexvolume plugin. cifs needs $binary executables to be available on each host system."
 	fi
 }
 
