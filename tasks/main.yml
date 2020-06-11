@@ -76,7 +76,9 @@
   file:
     path: "{{kube_volume_plugin_dir}}/fstab~cifs"
     state: directory
+  when: kube_enable_cifs_mount
 
 - name: install cifs plugin
   copy: src=cifs dest="{{kube_volume_plugin_dir}}/fstab~cifs/cifs" mode=0755
   become: true
+  when: kube_enable_cifs_mount
