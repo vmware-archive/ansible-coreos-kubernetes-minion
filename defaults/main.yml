@@ -10,6 +10,8 @@ kubernetes_enable_cni: False
 kubernetes_version: "1.14.3"
 hyperkube: "gcr.io/google_containers/hyperkube:v{{kubernetes_version}}"
 kube_apiserver_secure_port: 6443
+kube_volume_plugin_dir: "/etc/kubernetes/volumeplugins"
+kube_enable_cifs_mount: False
 
 kube_proxy_requests_cpu: "200m"
 kube_proxy_requests_memory: "128Mi"
